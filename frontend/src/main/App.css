@@ -1,0 +1,38 @@
+:root {
+    --shadow:
+        0 2px 23px 0 rgba(0, 0, 0, 0.1),
+        0 2px 49px 0 rgba(0, 0, 0, 0.06);
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Montserrat, sans-serif';
+}
+
+.app {
+    margin: 0;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: 100px 1fr 70px;
+    grid-template-areas: 
+    "header header"
+    "nav main"
+    "footer footer";
+}
+
+.header {
+    grid-area: header;
+}
+
+aside.menu-area {
+    grid-area: nav;
+}
+
+.main {
+    grid-area: main;
+}
+
+.footer {
+    grid-area: footer;
+}

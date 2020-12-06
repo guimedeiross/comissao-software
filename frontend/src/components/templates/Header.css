@@ -1,0 +1,10 @@
+header.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0,0,0,0.8);
+    font-size: 1.8em;
+    font-weight: 600;
+    color: #fff;
+    box-shadow: var(--shadow)
+}
