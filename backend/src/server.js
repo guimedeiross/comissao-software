@@ -29,6 +29,7 @@ app.post('/register', async (req, res) => {
 
 app.post('/reports', async (req, res) => {
     const valores = req.body
+    console.log(valores.empresa)
     //console.log(new Date(valores.dataDe.replace(/-/g, '/')).toLocaleDateString())
     // new Date(valores.dataAte.replace(/-/g, '/'))
     try {
@@ -43,7 +44,7 @@ app.post('/reports', async (req, res) => {
         const result2 = await db.select('*').from('infoComissao')
                 .where({ empresa: valores.empresa })
                 //console.log(result2)
-            //res.status(200).send(result)
+            //res.status(200).send(result2)
     } catch (msg) {
         res.status(400).send(msg)
     }

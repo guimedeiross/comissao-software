@@ -37,11 +37,6 @@ export default () => {
             setValues(newValues)
         }
     }
-    useEffect(()=>{
-        const v = { ...values }
-        v.empresa = 'cairo'
-        setValues(v)
-    }, [])
 
     return (
         <div className="form">

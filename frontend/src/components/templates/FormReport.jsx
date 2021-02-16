@@ -11,37 +11,34 @@ export default () => {
     const clear = event => {
         if (event) {
             event.preventDefault()
-            setValues({empresa:'cairo'})
+            setValues({ empresa: 'cairo' })
         }
     }
 
     const save = async e => {
         await axios.post(`${baseUrl}/reports`, values)
-        .then(msg => { 
-            const result = document.querySelector('.resultado')
-            result.classList.add('alert', 'alert-success')
-            result.innerHTML = msg.statusText
-        })
-        .catch(msg => {
-            const result = document.querySelector('.resultado')
-            result.classList.add('alert', 'alert-warning')
-            result.innerHTML = 'Verificar campos'
-        })
-            
+            .then(msg => {
+                console.log(msg)
+                /* const result = document.querySelector('.resultado')
+                result.innerHTML = msg.statusText */
+            })
+            .catch(msg => {
+                const result = document.querySelector('.resultado')
+                result.classList.add('alert', 'alert-warning')
+                result.innerHTML = 'Verificar campos'
+            })
+
     }
 
     const updateField = e => {
         if (e) {
             const newValues = { ...values }
             newValues[e.target.name] = e.target.value
+            console.log(newValues)
             setValues(newValues)
+
         }
     }
-    useEffect(()=>{
-        const v = { ...values }
-        v.empresa = 'cairo'
-        setValues(v)
-    }, [])
 
     return (
         <div className="form">
@@ -72,19 +69,29 @@ export default () => {
                 <div className="col-12 col-md-6">
                     <div className="form-group">
                         <div className="form-check">
-                            <input className="form-check-input" type="radio" name="empresa" id="Cairo" checked={values.empresa === "cairo"} value={'cairo'} onChange={e => updateField(e)} />
+                            <input className="form-check-input" type="radio" name="empresa" id="Cairo" checked={values.empresa === "cairo"} value={'cairo'} onClick={e => updateField(e)} />
                             <label className="form-check-label" htmlFor="Cairo">Cairo</label>
                         </div>
                         <div className="form-check">
-                            <input className="form-check-input" type="radio" name="empresa" id="Webhaus"  checked={values.empresa === "webhaus"} value={'webhaus'} onChange={e => updateField(e)} />
+                            <input className="form-check-input" type="radio" name="empresa" id="Webhaus" checked={values.empresa === "webhaus"} value={'webhaus'} onClick={e => updateField(e)} />
                             <label className="form-check-label" htmlFor="Webhaus">Webhaus</label>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="resultado"></div>
+            <table className="resultado">
+                <thead>
+                    <thead>
+                        <tr>
+                            <th>Month</th>
+                            <th>Savings</th>
+                        </tr>
+                    </thead>
+                </thead>
+            </table>
+
             <div className="row d-flex justify-content-center">
-                <button className="btn btn-outline-light" onClick={e => save(e) }>Salvar</button>
+                <button className="btn btn-outline-light" onClick={e => save(e)}>Salvar</button>
                 <button className="btn btn-outline-danger ml-2 especifico" onClick={e => clear(e)}>Cancelar</button>
             </div>
         </div>
