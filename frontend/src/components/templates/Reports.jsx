@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { Fragment } from 'react'
 import Main from './Main'
 
-export default class Reports extends Component {
-    render() {
-        return (
-            <Main title="Relatórios"></ Main >
-        )
-    }
+export default props => {
+    return (
+        <Fragment>
+            <Main title="Relatórios"/>
+        </Fragment>
+    )
 }

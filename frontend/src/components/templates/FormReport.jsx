@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import './Form.css'
+import './FormReport.css'
 import axios from 'axios'
 
 const baseUrl = 'http://localhost:3001'
@@ -16,7 +16,7 @@ export default () => {
     }
 
     const save = async e => {
-        await axios.post(`${baseUrl}/register`, values)
+        await axios.post(`${baseUrl}/reports`, values)
         .then(msg => { 
             const result = document.querySelector('.resultado')
             result.classList.add('alert', 'alert-success')
@@ -48,23 +48,24 @@ export default () => {
             <div className="row">
                 <div className="col-12 col-md-6">
                     <div className="form-group" >
-                        <label htmlFor="preco">Preço da venda ou Serviço:</label>
-                        <input type="number" className="form-control" id="preco" name="preco" placeholder="Informe o valor" value={values.preco || ''} onChange={e => updateField(e)} />
+                        <label htmlFor="dataDe">De:</label>
+                        <input type="date" className="form-control" id="dataDe" name="dataDe" value={values.dataDe || ''} onChange={e => updateField(e)} />
                     </div>
                 </div>
 
                 <div className="col-12 col-md-6">
                     <div className="form-group" >
-                        <label htmlFor="cliente">Cliente:</label>
-                        <input type="text" className="form-control" id="cliente" name="cliente" placeholder="Informe o Cliente" value={values.cliente || ''} onChange={e => updateField(e)} />
+                        <label htmlFor="dataAte">Até:</label>
+                        <input type="date" className="form-control" id="dataAte" name="dataAte" value={values.dataAte || ''} onChange={e => updateField(e)} />
                     </div>
                 </div>
             </div>
             <div className="row">
+
                 <div className="col-12 col-md-6">
-                    <div className="form-group">
-                        <label htmlFor="numeroTicket">Numero do Ticket:</label>
-                        <input type="number" className="form-control" name="numeroTicket" id="numeroTicket" placeholder="Informe o número do Ticket" value={values.numeroTicket || ''} onChange={e => updateField(e)} />
+                    <div className="form-group" >
+                        <label htmlFor="cliente">Cliente:</label>
+                        <input type="text" className="form-control" id="cliente" name="cliente" value={values.cliente || ''} onChange={e => updateField(e)} />
                     </div>
                 </div>
 
