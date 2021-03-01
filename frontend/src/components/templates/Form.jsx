@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import './Form.css'
 import axios from 'axios'
+import React, { useState } from 'react'
+import './Form.css'
 
 const baseUrl = 'http://localhost:3001'
 
@@ -17,15 +17,31 @@ export default () => {
 
     const save = async e => {
         await axios.post(`${baseUrl}/register`, values)
-        .then(msg => { 
+        .then(msg => {
             const result = document.querySelector('.resultado')
+            if(result.style.display === 'none'){
+                result.style.display = ''
+            }
             result.classList.add('alert', 'alert-success')
             result.innerHTML = msg.statusText
         })
-        .catch(msg => {
-            const result = document.querySelector('.resultado')
-            result.classList.add('alert', 'alert-warning')
-            result.innerHTML = 'Verificar campos'
+        .catch(error => {
+            if (error.response) {
+                setValues({ empresa: 'cairo' })
+                const result = document.querySelector('.resultado')
+                result.style.display = ''
+                result.classList.add("alert", "alert-warning")
+                result.setAttribute("role", "alert")
+                result.innerHTML = error.response.data
+                const timer = () => {
+                    const t = setInterval(() => {
+                        result.style.display = 'none'
+                    }, 5000)
+                    return t
+                }
+                timer()
+                clearInterval(timer())
+            }
         })
             
     }

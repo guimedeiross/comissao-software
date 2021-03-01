@@ -1,7 +1,7 @@
 
 exports.up = function(knex) {
     return knex.schema.table('infoComissao', table => {
-        table.date('createdAt')
+        table.date('created_at').defaultTo(knex.fn.now())
     })  
 };
 

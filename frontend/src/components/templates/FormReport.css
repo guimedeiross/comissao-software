@@ -16,3 +16,9 @@ label {
 .resultado {
     font-weight: bold;
 }
+table {
+    display: none;
+}
+.resultadoErro {
+    word-break: break-word;
+}

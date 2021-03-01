@@ -3,7 +3,7 @@ exports.up = function(knex) {
     return knex.schema.createTable('infoComissao', table => {
         table.increments('id').primary()
         table.string('empresa').notNull()
-        table.float('preco').notNull().unique()
+        table.float('preco').notNull()
         table.string('cliente').notNull()
         table.integer('numeroTicket').notNull()
     })  

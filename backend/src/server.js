@@ -1,7 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const { existsOrError } = require('./validation')
+const { existsOrError, validateDate, existsOrErrorRegister } = require('./validation')
 const db = require('./db')
 const app = express()
 
@@ -17,9 +17,9 @@ app.listen(3001, () => {
 app.post('/register', async (req, res) => {
     const valores = req.body
     try {
-        existsOrError(valores.preco, "Preco não pode ser vazio")
-        existsOrError(valores.cliente, "Cliente não pode ser vazio")
-        existsOrError(valores.numeroTicket, "Numero do Ticket não pode ser vazio")
+        existsOrErrorRegister(valores.preco, 'Preco não pode ser vazio')
+        existsOrErrorRegister(valores.cliente, "Cliente não pode ser vazio")
+        existsOrErrorRegister(valores.numeroTicket, "Numero do Ticket não pode ser vazio")
         await db('infoComissao').insert(valores)
         res.status(201).send()
     } catch (msg) {
@@ -29,23 +29,22 @@ app.post('/register', async (req, res) => {
 
 app.post('/reports', async (req, res) => {
     const valores = req.body
-    console.log(valores.empresa)
-    //console.log(new Date(valores.dataDe.replace(/-/g, '/')).toLocaleDateString())
-    // new Date(valores.dataAte.replace(/-/g, '/'))
     try {
-        if(valores.cliente !==''){
-            existsOrError(valores.cliente, "Cliente não pode ser vazio")
+        if (valores.cliente !== '') {
+            validateDate(valores, 'Data não pode estar vazio ou <br>Data "até" não pode ser menor que a data "De"')
+            existsOrError(valores, "Cliente não pode ser vazio")
             const result = await db.select('*').from('infoComissao')
                 .where({ cliente: valores.cliente })
                 .andWhere({ empresa: valores.empresa })
-            res.status(200).send(result)
-        }
-        console.log(valores.empresa)
-        const result2 = await db.select('*').from('infoComissao')
+                .andWhereBetween('created_at', [new Date(valores.dataDe).toLocaleDateString('pt-BR', {timeZone: 'UTC'}), new Date(valores.dataAte).toLocaleDateString('pt-BR', {timeZone: 'UTC'})])
+            res.status(200).json(result)
+        } else {
+            const result2 = await db.select('*').from('infoComissao')
                 .where({ empresa: valores.empresa })
-                //console.log(result2)
-            //res.status(200).send(result2)
+            res.status(200).json(result2)
+        }
     } catch (msg) {
         res.status(400).send(msg)
     }
+
 })
