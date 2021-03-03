@@ -36,7 +36,7 @@ app.post('/reports', async (req, res) => {
             const result = await db.select('*').from('infoComissao')
                 .where({ cliente: valores.cliente })
                 .andWhere({ empresa: valores.empresa })
-                .andWhereBetween('created_at', [new Date(valores.dataDe).toLocaleDateString('pt-BR', {timeZone: 'UTC'}), new Date(valores.dataAte).toLocaleDateString('pt-BR', {timeZone: 'UTC'})])
+                .andWhereBetween('created_at', [new Date(valores.dataDe).toISOString().split('T')[0] , new Date(valores.dataAte).toISOString().split('T')[0]])
             res.status(200).json(result)
         } else {
             const result2 = await db.select('*').from('infoComissao')

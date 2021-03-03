@@ -32,7 +32,7 @@ export default () => {
     const save = async e => {
         await axios.post(`${baseUrl}/reports`, values)
             .then(msg => {
-                if(document.querySelector('tbody tr') !== null)
+                if(document.querySelector('tbody tr') !== null) document.querySelector('table').innerHTML = ''
                 else montarTabela(msg.data)
             })
             .catch(error => {
